@@ -1,7 +1,6 @@
 package frc.robot;
 
 // WPILib Imports
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 
 /**
@@ -44,27 +43,27 @@ public class TeleopInput {
 	 * @return Axis value
 	 */
 	public double getLeftJoystickX() {
-		return leftJoystick.getLeftX();
+		return leftJoystick.getX();
 	}
 	/**
 	 * Get Y axis of Left Joystick.
 	 * @return Axis value
 	 */
 	public double getLeftJoystickY() {
-		return leftJoystick.getLeftY();
+		return leftJoystick.getY();
 	}
 	/**
-	 * Get the value of the shooter button.
+	 * Get the value of the forward button.
 	 * @return True if button is pressed
 	 */
-	public boolean isShooterButtonPressed() {
+	public boolean isForwardButtonPressed() {
 		return leftJoystick.getRawButton(1);
 	}
 	/**
-	 * Get the value of the intake button.
+	 * Get the value of the reverse button.
 	 * @return True if button is pressed
 	 */
-	public boolean isIntakeButtonPressed() {
+	public boolean isReverseButtonPressed() {
 		return leftJoystick.getRawButton(2);
 	}
 
@@ -74,14 +73,14 @@ public class TeleopInput {
 	 * @return Axis value
 	 */
 	public double getRightJoystickX() {
-		return rightJoystick.getRightX();
+		return rightJoystick.getX();
 	}
 	/**
 	 * Get Y axis of Right Joystick.
 	 * @return Axis value
 	 */
 	public double getRightJoystickY() {
-		return rightJoystick.getRightY();
+		return rightJoystick.getY();
 	}
 
 	/* ======================== Private methods ======================== */
