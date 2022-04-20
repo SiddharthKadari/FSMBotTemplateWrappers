@@ -64,14 +64,12 @@ public abstract class FiniteStateMachine {
 	 * as it may be called multiple times in a boot cycle,
 	 * Ex. if the robot is enabled, disabled, then reenabled.
 	 */
-	public final void resetTeleop() {
+	public final void resetTeleop(TeleopInput input) {
 		reset();
 
 		setState(startStateTeleop);
 
-		update(null);
-
-		setState(startStateTeleop);
+		currentState.handle(input);
 	}
 
     /**
