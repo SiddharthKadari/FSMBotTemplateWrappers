@@ -13,7 +13,7 @@ public class IdleState extends FiniteState<ExampleFSMSystem> {
         if (input == null) {
 			return;
 		}
-        FSM.exampleMotor.set(0);
+        getFSM().exampleMotor.set(0);
     }
 
     @Override

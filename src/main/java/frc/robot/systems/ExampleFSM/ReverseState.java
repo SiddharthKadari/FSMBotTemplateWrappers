@@ -13,7 +13,7 @@ public class ReverseState extends FiniteState<ExampleFSMSystem> {
         if (input == null) {
 			return;
 		}
-        FSM.exampleMotor.set(-1);
+        getFSM().exampleMotor.set(-1);
     }
 
     @Override

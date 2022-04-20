@@ -5,7 +5,7 @@ import frc.robot.TeleopInput;
 
 public abstract class FiniteState<T extends FiniteStateMachine> {
     /* ======================== Private variables ======================== */
-    protected final T FSM;
+    private final T FSM;
     private final Timer stateTimer;
     private int tickCounter;
 
@@ -67,5 +67,13 @@ public abstract class FiniteState<T extends FiniteStateMachine> {
      */
     final Timer getTimer() {
         return stateTimer;
+    }
+
+    /**
+     * Returns the Finite State Machine instance that this State is acting within.
+     * @return the Finite State Machine instance that this State is acting within.
+     */
+    public final T getFSM(){
+        return FSM;
     }
 }
