@@ -121,7 +121,7 @@ public abstract class FiniteStateMachine {
 	 * @return the current state of the FSM
 	 */
 	@SuppressWarnings("unchecked")
-	public Class<? extends FiniteState<?>> getCurrentState(){
+	public final Class<? extends FiniteState<?>> getCurrentState(){
 		return (Class<? extends FiniteState<?>>) currentState.getClass();
 	}
 
@@ -130,7 +130,7 @@ public abstract class FiniteStateMachine {
 	 * @param targetFSM The class of the desired FSM
 	 * @return the instance of a desired FSM, null if provided FSM was never instantiated
 	 */
-	public static FiniteStateMachine getStateMachine(Class<? extends FiniteStateMachine> targetFSM) {
+	public static final FiniteStateMachine getStateMachine(Class<? extends FiniteStateMachine> targetFSM) {
 		for(int i = 0; i < FINITE_STATE_MACHINES.size(); i++) {
 			if(targetFSM.isInstance(FINITE_STATE_MACHINES.get(i))) {
 				return FINITE_STATE_MACHINES.get(i);
@@ -138,5 +138,25 @@ public abstract class FiniteStateMachine {
 		}
 
 		return null;
+	}
+
+	/**
+     * Returns the number of times that the FSM has updated while in this Finite State
+     * since changing into this Finite State.
+     * @return the number of times that the FSM has updated while in this Finite State
+     * since changing into this Finite State
+     */
+    public final int ticksElapsedInState(){
+        return currentState.ticksElapsedInState();
+    }
+
+	/**
+     * Returns the amount of time in seconds that the FSM has been in this Finite State
+     * since changing into this Finite State.
+     * @return the amount of time in seconds that the FSM has been in this Finite State
+     * since changing into this Finite State
+     */
+	public final double timeElapsedInState(){
+		return currentState.getTimer().get();
 	}
 }

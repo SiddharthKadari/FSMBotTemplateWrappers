@@ -9,7 +9,7 @@ public class IdleState extends FiniteState<ExampleFSMSystem> {
     }
 
     @Override
-    public void handle(TeleopInput input) {
+    public void handleState(TeleopInput input) {
         if (input == null) {
 			return;
 		}
