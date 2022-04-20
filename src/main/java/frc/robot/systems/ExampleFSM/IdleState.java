@@ -10,9 +10,6 @@ public class IdleState extends FiniteState<ExampleFSMSystem> {
 
     @Override
     public void handleState(TeleopInput input) {
-        if (input == null) {
-			return;
-		}
         getFSM().exampleMotor.set(0);
     }
 
