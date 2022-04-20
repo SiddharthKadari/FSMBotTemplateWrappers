@@ -2,10 +2,14 @@ package frc.robot.systems.SystemWrappers;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 import frc.robot.TeleopInput;
 
 public abstract class FiniteStateMachine {
+	/* ======================== Static variables ======================== */
+	private static final ArrayList<FiniteStateMachine> FINITE_STATE_MACHINES = new ArrayList<>();
+
     /* ======================== Private variables ======================== */
 	private FiniteState<?> currentState;
 	private final Class<? extends FiniteState<?>> startStateAuto;
@@ -20,6 +24,8 @@ public abstract class FiniteStateMachine {
 	 */
 	public FiniteStateMachine(Class<? extends FiniteState<?>> autoStart,
 							  Class<? extends FiniteState<?>> teleopStart) {
+		FINITE_STATE_MACHINES.add(this);
+
 		startStateAuto = autoStart;
 		startStateTeleop = teleopStart;
 		// Reset state machine
