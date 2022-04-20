@@ -124,4 +124,19 @@ public abstract class FiniteStateMachine {
 	public Class<? extends FiniteState<?>> getCurrentState(){
 		return (Class<? extends FiniteState<?>>) currentState.getClass();
 	}
+
+	/**
+	 * Returns the instance of a desired FSM, null if provided FSM was never instantiated.
+	 * @param targetFSM The class of the desired FSM
+	 * @return the instance of a desired FSM, null if provided FSM was never instantiated
+	 */
+	public static FiniteStateMachine getStateMachine(Class<? extends FiniteStateMachine> targetFSM) {
+		for(int i = 0; i < FINITE_STATE_MACHINES.size(); i++) {
+			if(targetFSM.isInstance(FINITE_STATE_MACHINES.get(i))) {
+				return FINITE_STATE_MACHINES.get(i);
+			}
+		}
+
+		return null;
+	}
 }
