@@ -5,7 +5,7 @@ import frc.robot.TeleopInput;
 
 public abstract class FiniteState<StateMachine extends FiniteStateMachine> {
     /* ======================== Private variables ======================== */
-    private final StateMachine FSM;
+    private StateMachine FSM;
     private final Timer stateTimer;
     private int tickCounter;
 
@@ -14,9 +14,7 @@ public abstract class FiniteState<StateMachine extends FiniteStateMachine> {
      * Creates an instance of this Finite State.
      * @param fsm the finite state machine corresponding to this state
      */
-    public FiniteState(StateMachine fsm) {
-        FSM = fsm;
-
+    public FiniteState() {
         stateTimer = new Timer();
         stateTimer.start();
         tickCounter = 0;
@@ -75,5 +73,17 @@ public abstract class FiniteState<StateMachine extends FiniteStateMachine> {
      */
     public final StateMachine getFSM(){
         return FSM;
+    }
+
+    /**
+     * Sets the Finite State Machine instance that this State is acting within.
+     */
+    @SuppressWarnings("unchecked")
+    final void setFSM(FiniteStateMachine fsm) throws IllegalArgumentException{
+        try{
+            FSM = (StateMachine) fsm;
+        }catch(ClassCastException e){
+            throw new IllegalArgumentException("This state can only be assigned to the Finite State Machine specified in its generic type parameter");
+        }
     }
 }

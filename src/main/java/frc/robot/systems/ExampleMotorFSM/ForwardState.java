@@ -4,10 +4,6 @@ import frc.robot.TeleopInput;
 import frc.robot.systems.SystemWrappers.FiniteState;
 
 public class ForwardState extends FiniteState<ExampleMotorFSM> {
-    public ForwardState(ExampleMotorFSM fsm) {
-        super(fsm);
-    }
-
     @Override
     public void handleState(TeleopInput input) {
         getFSM().exampleMotor.set(1);

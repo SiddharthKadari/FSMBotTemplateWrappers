@@ -95,7 +95,7 @@ public abstract class FiniteStateMachine {
 
 	/**
 	 * Called after the Current State is handled, and before the state is updated.
-\	 */
+	 */
 	public void updateAutonomous(){}
 
 	/**
@@ -103,12 +103,12 @@ public abstract class FiniteStateMachine {
 	 * tick counters if state changes.
 	 * @param newState The desired state of the state machine
 	 */
-	@SuppressWarnings("unchecked")
 	private final void setState(Class<? extends FiniteState<? extends FiniteStateMachine>> newState) throws IllegalArgumentException {
 		try {
-			currentState = ((Constructor<? extends FiniteState<? extends FiniteStateMachine>>)newState.getDeclaredConstructors()[0]).newInstance(this);
+			currentState = ((Constructor<? extends FiniteState<? extends FiniteStateMachine>>)newState.getDeclaredConstructor()).newInstance();
+			currentState.setFSM(this);
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-				| SecurityException e) {
+				| SecurityException | NoSuchMethodException e) {
 			throw new IllegalArgumentException("The desired State is not a state of this FiniteStateMachine");
 		}
 	}

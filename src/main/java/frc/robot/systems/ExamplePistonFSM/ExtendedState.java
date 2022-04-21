@@ -8,11 +8,6 @@ import frc.robot.systems.SystemWrappers.FiniteState;
 import frc.robot.systems.SystemWrappers.FiniteStateMachine;
 
 public class ExtendedState extends FiniteState<ExamplePistonFSM> {
-
-    public ExtendedState(ExamplePistonFSM fsm) {
-        super(fsm);
-    }
-
     @Override
     public void handleState(TeleopInput input) {
         getFSM().solenoid.set(getFSM().ticksElapsedInState() == 0 ?
