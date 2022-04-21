@@ -81,8 +81,7 @@ public abstract class FiniteStateMachine {
 		} else{
 			updateTeleop(input);
 		}
-		System.out.println("Current State:" + currentState.nextState(input));
-		System.out.println("Next STate:" + currentState.nextState(input));
+
 		if(currentState.nextState(input) != currentState.getClass()){
 			setState(currentState.nextState(input));
 		}
