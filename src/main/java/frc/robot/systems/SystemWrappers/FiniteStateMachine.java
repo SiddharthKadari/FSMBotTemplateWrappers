@@ -46,14 +46,12 @@ public abstract class FiniteStateMachine {
 	 * as it may be called multiple times in a boot cycle,
 	 * Ex. if the robot is enabled, disabled, then reenabled.
 	 */
-	public final void resetAutonomous() {
+	private final void resetAutonomous() {
 		reset();
 
 		setState(startStateAuto);
 
-		update(null);
-
-		setState(startStateAuto);
+		currentState.handle(null);
 	}
 	
 	/**
@@ -64,7 +62,7 @@ public abstract class FiniteStateMachine {
 	 * as it may be called multiple times in a boot cycle,
 	 * Ex. if the robot is enabled, disabled, then reenabled.
 	 */
-	public final void resetTeleop(TeleopInput input) {
+	private final void resetTeleop(TeleopInput input) {
 		reset();
 
 		setState(startStateTeleop);
@@ -78,7 +76,7 @@ public abstract class FiniteStateMachine {
 	 * @param input Global TeleopInput if robot in teleop mode or null if
 	 *        the robot is in autonomous mode.
 	 */
-	public final void update(TeleopInput input) {
+	private final void update(TeleopInput input) {
 		currentState.handle(input);
 		if(input == null){
 			updateAutonomous();
@@ -156,5 +154,33 @@ public abstract class FiniteStateMachine {
      */
 	public final double timeElapsedInState(){
 		return currentState.getTimer().get();
+	}
+
+	/**
+	 * Resets all existing instantiated State Machines for Autonomous.
+	 */
+	public static final void resetAllStateMachinesAutonomous() {
+		for(int i = 0; i < FINITE_STATE_MACHINES.size(); i++){
+			FINITE_STATE_MACHINES.get(i).resetAutonomous();
+		}
+	}
+
+	/**
+	 * Resets all existing instantiated State Machines for Teleop.
+	 * @param input Global TeleopInput, since robot in teleop mode
+	 */
+	public static final void resetAllStateMachinesTeleop(TeleopInput input) {
+		for(int i = 0; i < FINITE_STATE_MACHINES.size(); i++){
+			FINITE_STATE_MACHINES.get(i).resetTeleop(input);
+		}
+	}
+
+	/**
+	 * Updates all existing instantiated State Machines.
+	 */
+	public static final void updateAllStateMachines(TeleopInput input) {
+		for(int i = 0; i < FINITE_STATE_MACHINES.size(); i++){
+			FINITE_STATE_MACHINES.get(i).update(input);
+		}
 	}
 }

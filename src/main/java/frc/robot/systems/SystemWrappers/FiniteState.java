@@ -3,9 +3,9 @@ package frc.robot.systems.SystemWrappers;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.TeleopInput;
 
-public abstract class FiniteState<T extends FiniteStateMachine> {
+public abstract class FiniteState<StateMachine extends FiniteStateMachine> {
     /* ======================== Private variables ======================== */
-    private final T FSM;
+    private final StateMachine FSM;
     private final Timer stateTimer;
     private int tickCounter;
 
@@ -14,7 +14,7 @@ public abstract class FiniteState<T extends FiniteStateMachine> {
      * Creates an instance of this Finite State.
      * @param fsm the finite state machine corresponding to this state
      */
-    public FiniteState(T fsm) {
+    public FiniteState(StateMachine fsm) {
         FSM = fsm;
 
         stateTimer = new Timer();
@@ -73,7 +73,7 @@ public abstract class FiniteState<T extends FiniteStateMachine> {
      * Returns the Finite State Machine instance that this State is acting within.
      * @return the Finite State Machine instance that this State is acting within.
      */
-    public final T getFSM(){
+    public final StateMachine getFSM(){
         return FSM;
     }
 }
