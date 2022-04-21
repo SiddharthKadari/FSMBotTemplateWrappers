@@ -1,4 +1,4 @@
-package frc.robot.systems.ExampleFSM;
+package frc.robot.systems.ExampleMotorFSM;
 
 // WPILib Imports
 
@@ -9,12 +9,11 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 // Robot Imports
 import frc.robot.systems.SystemWrappers.FiniteStateMachine;
 import frc.robot.HardwareMap;
-import frc.robot.TeleopInput;
 
-public class ExampleFSMSystem extends FiniteStateMachine{
-	CANSparkMax exampleMotor;
+public class ExampleMotorFSM extends FiniteStateMachine{
+	final CANSparkMax exampleMotor;
 
-	public ExampleFSMSystem(){
+	public ExampleMotorFSM(){
 		super(IdleState.class, IdleState.class);
 
 		exampleMotor = new CANSparkMax(HardwareMap.CAN_ID_SPARK_EXAMPLE,
@@ -22,7 +21,10 @@ public class ExampleFSMSystem extends FiniteStateMachine{
 	}
 
 	@Override
-	public void updateTeleop(TeleopInput input){
-		System.out.println(getCurrentState());
+	public void reset(){
+		//Example use of the reset method
+		if(exampleMotor.getEncoder() != null){
+			exampleMotor.getEncoder().setPosition(0);
+		}
 	}
 }

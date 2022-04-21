@@ -5,9 +5,8 @@ package frc.robot;
 
 // WPILib Imports
 import edu.wpi.first.wpilibj.TimedRobot;
-
-// Systems
-import frc.robot.systems.ExampleFSM.ExampleFSMSystem;
+import frc.robot.systems.ExampleMotorFSM.ExampleMotorFSM;
+import frc.robot.systems.ExamplePistonFSM.ExamplePistonFSM;
 import frc.robot.systems.SystemWrappers.FiniteStateMachine;
 
 /**
@@ -27,7 +26,11 @@ public class Robot extends TimedRobot {
 		input = new TeleopInput();
 
 		// Instantiate all systems here
-		new ExampleFSMSystem();
+		new ExampleMotorFSM();
+		new ExamplePistonFSM();
+
+		// Reset all State Machines
+		FiniteStateMachine.resetAllStateMachines();
 	}
 
 	@Override

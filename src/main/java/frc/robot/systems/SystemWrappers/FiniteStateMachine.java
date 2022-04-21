@@ -12,8 +12,8 @@ public abstract class FiniteStateMachine {
 
     /* ======================== Private variables ======================== */
 	private FiniteState<?> currentState;
-	private final Class<? extends FiniteState<?>> startStateAuto;
-	private final Class<? extends FiniteState<?>> startStateTeleop;
+	private final Class<? extends FiniteState<? extends FiniteStateMachine>> startStateAuto;
+	private final Class<? extends FiniteState<? extends FiniteStateMachine>> startStateTeleop;
 
 	/* ======================== Constructor ======================== */
 	/**
@@ -22,14 +22,12 @@ public abstract class FiniteStateMachine {
 	 * the constructor is called only once when the robot boots.
 	 * @param startState the desired init state of the FSM.
 	 */
-	public FiniteStateMachine(Class<? extends FiniteState<?>> autoStart,
-							  Class<? extends FiniteState<?>> teleopStart) {
+	public FiniteStateMachine(Class<? extends FiniteState<? extends FiniteStateMachine>> autoStart,
+							  Class<? extends FiniteState<? extends FiniteStateMachine>> teleopStart) {
 		FINITE_STATE_MACHINES.add(this);
 
 		startStateAuto = autoStart;
 		startStateTeleop = teleopStart;
-		// Reset state machine
-		reset();
 	}
 
 	/**
@@ -51,7 +49,7 @@ public abstract class FiniteStateMachine {
 
 		setState(startStateAuto);
 
-		currentState.handle(null);
+		currentState.handleState(null);
 	}
 	
 	/**
@@ -67,7 +65,7 @@ public abstract class FiniteStateMachine {
 
 		setState(startStateTeleop);
 
-		currentState.handle(input);
+		currentState.handleState(input);
 	}
 
     /**
@@ -83,7 +81,11 @@ public abstract class FiniteStateMachine {
 		} else{
 			updateTeleop(input);
 		}
-		setState(currentState.nextState(input));
+		System.out.println("Current State:" + currentState.nextState(input));
+		System.out.println("Next STate:" + currentState.nextState(input));
+		if(currentState.nextState(input) != currentState.getClass()){
+			setState(currentState.nextState(input));
+		}
 	}
 
 	/**
@@ -103,12 +105,12 @@ public abstract class FiniteStateMachine {
 	 * @param newState The desired state of the state machine
 	 */
 	@SuppressWarnings("unchecked")
-	private final void setState(Class<? extends FiniteState<?>> newState) {
+	private final void setState(Class<? extends FiniteState<? extends FiniteStateMachine>> newState) throws IllegalArgumentException {
 		try {
-			currentState = ((Constructor<? extends FiniteState<?>>)newState.getDeclaredConstructors()[0]).newInstance(this);
+			currentState = ((Constructor<? extends FiniteState<? extends FiniteStateMachine>>)newState.getDeclaredConstructors()[0]).newInstance(this);
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| SecurityException e) {
-			e.printStackTrace();
+			throw new IllegalArgumentException("The desired State is not a state of this FiniteStateMachine");
 		}
 	}
 
@@ -117,8 +119,8 @@ public abstract class FiniteStateMachine {
 	 * @return the current state of the FSM
 	 */
 	@SuppressWarnings("unchecked")
-	public final Class<? extends FiniteState<?>> getCurrentState(){
-		return (Class<? extends FiniteState<?>>) currentState.getClass();
+	public final Class<? extends FiniteState<? extends FiniteStateMachine>> getCurrentState(){
+		return (Class<? extends FiniteState<? extends FiniteStateMachine>>) currentState.getClass();
 	}
 
 	/**
@@ -181,6 +183,15 @@ public abstract class FiniteStateMachine {
 	public static final void updateAllStateMachines(TeleopInput input) {
 		for(int i = 0; i < FINITE_STATE_MACHINES.size(); i++){
 			FINITE_STATE_MACHINES.get(i).update(input);
+		}
+	}
+
+	/**
+	 * Calls the overridable reset() method for all existing instantiated State Machines.
+	 */
+	public static final void resetAllStateMachines() {
+		for(int i = 0; i < FINITE_STATE_MACHINES.size(); i++){
+			FINITE_STATE_MACHINES.get(i).reset();
 		}
 	}
 }

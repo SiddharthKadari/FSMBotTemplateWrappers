@@ -1,20 +1,20 @@
-package frc.robot.systems.ExampleFSM;
+package frc.robot.systems.ExampleMotorFSM;
 
 import frc.robot.TeleopInput;
 import frc.robot.systems.SystemWrappers.FiniteState;
 
-public class ForwardState extends FiniteState<ExampleFSMSystem> {
-    public ForwardState(ExampleFSMSystem fsm) {
+public class ReverseState extends FiniteState<ExampleMotorFSM> {
+    public ReverseState(ExampleMotorFSM fsm) {
         super(fsm);
     }
 
     @Override
     public void handleState(TeleopInput input) {
-        getFSM().exampleMotor.set(1);
+        getFSM().exampleMotor.set(-1);
     }
 
     @Override
-    public Class<? extends FiniteState<?>> nextState(TeleopInput input) {
+    public Class<? extends FiniteState<ExampleMotorFSM>> nextState(TeleopInput input) {
         if (input == null) {
 			return IdleState.class;
 		}

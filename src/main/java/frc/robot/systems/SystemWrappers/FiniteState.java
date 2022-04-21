@@ -28,9 +28,9 @@ public abstract class FiniteState<StateMachine extends FiniteStateMachine> {
 	 *        the robot is in autonomous mode.
 	 */
     final void handle(TeleopInput input) {
-        tickCounter++;
-
         handleState(input);
+
+        tickCounter++;
     }
 
     /**
@@ -49,7 +49,7 @@ public abstract class FiniteState<StateMachine extends FiniteStateMachine> {
 	 *        the robot is in autonomous mode.
 	 * @return FSM state for the next iteration
 	 */
-    public abstract Class<? extends FiniteState<?>> nextState(TeleopInput input);
+    public abstract Class<? extends FiniteState<StateMachine>> nextState(TeleopInput input);
 
     /**
      * Returns the number of times that the FSM has updated while in this Finite State
