@@ -21,7 +21,7 @@ public class ExampleMotorFSM extends FiniteStateMachine{
 	}
 
 	@Override
-	public void reset(){
+	protected void reset(){
 		//Example use of the reset method
 		if(exampleMotor.getEncoder() != null){
 			exampleMotor.getEncoder().setPosition(0);

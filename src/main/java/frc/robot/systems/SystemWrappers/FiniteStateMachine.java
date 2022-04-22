@@ -22,7 +22,7 @@ public abstract class FiniteStateMachine {
 	 * the constructor is called only once when the robot boots.
 	 * @param startState the desired init state of the FSM.
 	 */
-	public FiniteStateMachine(Class<? extends FiniteState<? extends FiniteStateMachine>> autoStart,
+	protected FiniteStateMachine(Class<? extends FiniteState<? extends FiniteStateMachine>> autoStart,
 							  Class<? extends FiniteState<? extends FiniteStateMachine>> teleopStart) {
 		FINITE_STATE_MACHINES.add(this);
 
@@ -34,7 +34,7 @@ public abstract class FiniteStateMachine {
 	 * Reset all of the system's components. Zero sensors, initialize variables,
 	 * etc.
 	 */
-	public void reset() {}
+	protected void reset() {}
 	
 	/**
 	 * Reset this system to its start state during Autonomous. This may be
@@ -91,12 +91,12 @@ public abstract class FiniteStateMachine {
 	 * Called after the Current State is handled, and before the state is updated.
 	 * @param input Global TeleopInput, since robot in teleop mode
 	 */
-	public void updateTeleop(TeleopInput input){}
+	protected void updateTeleop(TeleopInput input){}
 
 	/**
 	 * Called after the Current State is handled, and before the state is updated.
 	 */
-	public void updateAutonomous(){}
+	protected void updateAutonomous(){}
 
 	/**
 	 * Sets the state of this StateMachine to the new State. Resets all timers and
