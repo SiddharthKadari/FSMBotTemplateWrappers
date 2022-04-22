@@ -17,7 +17,7 @@ public class RetractedState extends FiniteState<ExamplePistonFSM> {
 
     @Override
     public Class<? extends FiniteState<ExamplePistonFSM>> nextState(TeleopInput input) {
-        return FiniteStateMachine.getStateMachine(ExampleMotorFSM.class).getCurrentState() == ForwardState.class ?
+        return FiniteStateMachine.getStateOf(ExampleMotorFSM.class) == ForwardState.class ?
             ExtendedState.class :
             RetractedState.class;
     }

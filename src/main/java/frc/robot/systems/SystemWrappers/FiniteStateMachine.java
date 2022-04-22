@@ -118,7 +118,7 @@ public abstract class FiniteStateMachine {
 	 * @return the current state of the FSM
 	 */
 	@SuppressWarnings("unchecked")
-	public final Class<? extends FiniteState<? extends FiniteStateMachine>> getCurrentState(){
+	private final Class<? extends FiniteState<? extends FiniteStateMachine>> getCurrentState(){
 		return (Class<? extends FiniteState<? extends FiniteStateMachine>>) currentState.getClass();
 	}
 
@@ -127,7 +127,7 @@ public abstract class FiniteStateMachine {
 	 * @param targetFSM The class of the desired FSM
 	 * @return the instance of a desired FSM, null if provided FSM was never instantiated
 	 */
-	public static final FiniteStateMachine getStateMachine(Class<? extends FiniteStateMachine> targetFSM) {
+	private static final FiniteStateMachine getStateMachine(Class<? extends FiniteStateMachine> targetFSM) {
 		for(int i = 0; i < FINITE_STATE_MACHINES.size(); i++) {
 			if(targetFSM.isInstance(FINITE_STATE_MACHINES.get(i))) {
 				return FINITE_STATE_MACHINES.get(i);
@@ -135,6 +135,16 @@ public abstract class FiniteStateMachine {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Returns the current state of the provided FSM, null if FSM was never instantiated.
+	 * @param targetFSM The class of the desired FSM
+	 * @return The class of the current state of the provided FSM, null if FSM was never instantiated.
+	 */
+	public static final Class<? extends FiniteState<? extends FiniteStateMachine>> getStateOf(Class<? extends FiniteStateMachine> targetFSM){
+		FiniteStateMachine target = getStateMachine(targetFSM);
+		return target == null ? null : target.getCurrentState();
 	}
 
 	/**
