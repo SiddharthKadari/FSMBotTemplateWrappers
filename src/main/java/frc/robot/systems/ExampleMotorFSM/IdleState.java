@@ -13,12 +13,11 @@ public class IdleState extends FiniteState<ExampleMotorFSM> {
     public Class<? extends FiniteState<ExampleMotorFSM>> nextState(TeleopInput input) {
         if (input == null) {
 			return IdleState.class;
-		}
-        if(input.isForwardButtonPressed()){
+		} else if (input.isForwardButtonPressed()) {
             return ForwardState.class;
-        }else if(input.isReverseButtonPressed()){
+        } else if (input.isReverseButtonPressed()) {
             return ReverseState.class;
-        }else{
+        } else {
             return IdleState.class;
         }
     }

@@ -55,7 +55,7 @@ public abstract class FiniteState<StateMachine extends FiniteStateMachine> {
      * @return the number of times that the FSM has updated while in this Finite State
      * since changing into this Finite State
      */
-    final int ticksElapsedInState(){
+    final int ticksElapsedInState() {
         return tickCounter;
     }
 
@@ -71,7 +71,7 @@ public abstract class FiniteState<StateMachine extends FiniteStateMachine> {
      * Returns the Finite State Machine instance that this State is acting within.
      * @return the Finite State Machine instance that this State is acting within.
      */
-    public final StateMachine getFSM(){
+    public final StateMachine getFSM() {
         return FSM;
     }
 
@@ -79,10 +79,10 @@ public abstract class FiniteState<StateMachine extends FiniteStateMachine> {
      * Sets the Finite State Machine instance that this State is acting within.
      */
     @SuppressWarnings("unchecked")
-    final void setFSM(FiniteStateMachine fsm) throws IllegalArgumentException{
-        try{
+    final void setFSM(FiniteStateMachine fsm) throws IllegalArgumentException {
+        try {
             FSM = (StateMachine) fsm;
-        }catch(ClassCastException e){
+        } catch (ClassCastException e) {
             throw new IllegalArgumentException("This state can only be assigned to the Finite State Machine specified in its generic type parameter");
         }
     }
