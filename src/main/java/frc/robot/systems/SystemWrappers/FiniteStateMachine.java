@@ -22,7 +22,7 @@ public abstract class FiniteStateMachine {
 	 * the constructor is called only once when the robot boots.
 	 * @param startState the desired init state of the FSM.
 	 */
-	protected FiniteStateMachine(Class<? extends FiniteState<? extends FiniteStateMachine>> autoStart,
+	public FiniteStateMachine(Class<? extends FiniteState<? extends FiniteStateMachine>> autoStart,
 							  Class<? extends FiniteState<? extends FiniteStateMachine>> teleopStart) {
 		FINITE_STATE_MACHINES.add(this);
 
