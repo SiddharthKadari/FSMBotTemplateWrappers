@@ -12,8 +12,8 @@ public abstract class FiniteStateMachine {
 
     /* ======================== Private variables ======================== */
 	private FiniteState<?> currentState;
-	private final Class<? extends FiniteState<? extends FiniteStateMachine>> startStateAuto;
-	private final Class<? extends FiniteState<? extends FiniteStateMachine>> startStateTeleop;
+	private Class<? extends FiniteState<? extends FiniteStateMachine>> startStateAuto;
+	private Class<? extends FiniteState<? extends FiniteStateMachine>> startStateTeleop;
 
 	/* ======================== Constructor ======================== */
 	/**
@@ -27,6 +27,26 @@ public abstract class FiniteStateMachine {
 		FINITE_STATE_MACHINES.add(this);
 
 		startStateAuto = autoStart;
+		startStateTeleop = teleopStart;
+	}
+
+	/**
+	 * Reassigns the Autonomous starting state to the provided state. At the start of
+	 * every Autonomous period, the state passed through this parameter will be the
+	 * FSM's initial state.
+	 * @param startStateAuto The desired starting state during the Autonomous period
+	 */
+	protected final void reassignAutoStartState(Class<? extends FiniteState<? extends FiniteStateMachine>> autoStart) {
+		startStateAuto = autoStart;
+	}
+
+	/**
+	 * Reassigns the Teleop starting state to the provided state. At the start of
+	 * every Teleop period, the state passed through this parameter will be the
+	 * FSM's initial state.
+	 * @param startStateAuto The desired starting state during the Teleop period
+	 */
+	protected final void reassignTeleopStartState(Class<? extends FiniteState<? extends FiniteStateMachine>> teleopStart) {
 		startStateTeleop = teleopStart;
 	}
 
@@ -82,8 +102,12 @@ public abstract class FiniteStateMachine {
 		}
 
 		currentState.handle(input);
-		if (currentState.nextState(input) != currentState.getClass()) {
-			setState(currentState.nextState(input));
+		
+		//We need to store the results of nextState, since calling nextState twice consecutively could 
+		//produce differing results, due to the behavior of the getRawButtonPressed() method of joysticks
+		Class<? extends FiniteState<? extends FiniteStateMachine>> nextState = currentState.nextState(input);
+		if (nextState != currentState.getClass()) {
+			setState(nextState);
 		}
 	}
 
