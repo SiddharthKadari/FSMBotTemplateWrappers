@@ -10,7 +10,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import frc.robot.systems.SystemWrappers.FiniteStateMachine;
 import frc.robot.HardwareMap;
 
-public class ExampleMotorFSM extends FiniteStateMachine{
+public class ExampleMotorFSM extends FiniteStateMachine {
+	final static double MOTOR_POWER = 0.1;
 	final CANSparkMax exampleMotor;
 
 	public ExampleMotorFSM(){

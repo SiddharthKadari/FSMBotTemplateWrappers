@@ -6,7 +6,7 @@ import frc.robot.systems.SystemWrappers.FiniteState;
 public class ReverseState extends FiniteState<ExampleMotorFSM> {
     @Override
     public void handleState(TeleopInput input) {
-        getFSM().exampleMotor.set(-1);
+        getFSM().exampleMotor.set(-ExampleMotorFSM.MOTOR_POWER);
     }
 
     @Override
